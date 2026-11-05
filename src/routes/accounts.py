@@ -138,7 +138,7 @@ async def register_user(
         background_tasks.add_task(
             email_sender.send_activation_email,
             new_user.email,
-            f"{settings.app_host}/accounts/activate/?token={activation_token.token}",
+            f"{settings.APP_HOST}/accounts/activate/?token={activation_token.token}",
         )
         return UserRegistrationResponseSchema.model_validate(new_user)
 
@@ -288,7 +288,7 @@ async def request_password_reset_token(
     background_tasks.add_task(
         email_sender.send_password_reset_email,
         user.email,
-        f"http://127.0.0.1/accounts/reset-password/?token={reset_token.token}",
+        f"{settings.APP_HOST}/accounts/reset-password/?token={reset_token.token}",
     )
 
     return MessageResponseSchema(
@@ -409,7 +409,7 @@ async def reset_password(
     background_tasks.add_task(
         email_sender.send_password_reset_complete_email,
         user.email,
-        "http://127.0.0.1/accounts/login/",
+        f"{settings.APP_HOST}/accounts/login/",
     )
     return MessageResponseSchema(message="Password reset successfully.")
 

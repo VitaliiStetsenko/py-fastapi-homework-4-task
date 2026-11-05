@@ -4,11 +4,8 @@ from typing import Any
 
 from pydantic_settings import BaseSettings
 
-
-app_host: str = "http://127.0.0.1"
-
-
 class BaseAppSettings(BaseSettings):
+    APP_HOST: str = "http://127.0.0.1"
     BASE_DIR: Path = Path(__file__).parent.parent
     PATH_TO_DB: str = str(BASE_DIR / "database" / "source" / "theater.db")
     PATH_TO_MOVIES_CSV: str = str(BASE_DIR / "database" / "seed_data" / "imdb_movies.csv")
