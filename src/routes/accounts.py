@@ -12,7 +12,6 @@ from config import (
     get_settings,
     BaseAppSettings,
     get_accounts_email_notificator,
-    settings
 )
 from database import (
     get_db,
@@ -180,6 +179,7 @@ async def activate_account(
         background_tasks: BackgroundTasks,
         db: AsyncSession = Depends(get_db),
         email_sender: EmailSenderInterface = Depends(get_accounts_email_notificator),
+        settings: BaseAppSettings = Depends(get_settings),
 ) -> MessageResponseSchema:
     """
     Endpoint to activate a user's account.
@@ -237,7 +237,7 @@ async def activate_account(
     background_tasks.add_task(
         email_sender.send_activation_complete_email,
         user.email,
-        "http://127.0.0.1/accounts/login/",
+        f"{settings.APP_HOST}/accounts/login/",
     )
     return MessageResponseSchema(message="User account activated successfully.")
 
@@ -257,6 +257,7 @@ async def request_password_reset_token(
         background_tasks: BackgroundTasks,
         db: AsyncSession = Depends(get_db),
         email_sender: EmailSenderInterface = Depends(get_accounts_email_notificator),
+        settings: BaseAppSettings = Depends(get_settings),
 ) -> MessageResponseSchema:
     """
     Endpoint to request a password reset token.
@@ -345,6 +346,7 @@ async def reset_password(
         background_tasks: BackgroundTasks,
         db: AsyncSession = Depends(get_db),
         email_sender: EmailSenderInterface = Depends(get_accounts_email_notificator),
+        settings: BaseAppSettings = Depends(get_settings),
 ) -> MessageResponseSchema:
     """
     Endpoint for resetting a user's password.
