@@ -132,7 +132,7 @@ async def register_user(
         background_tasks.add_task(
             email_sender.send_activation_email,
             new_user.email,
-            f"http://localhost/accounts/activate/?token={activation_token.token}"
+            f"{settings.app_host}/accounts/activate/?token={activation_token.token}",
         )
         return UserRegistrationResponseSchema.model_validate(new_user)
 
