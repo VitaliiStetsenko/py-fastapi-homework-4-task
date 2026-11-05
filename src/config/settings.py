@@ -4,6 +4,7 @@ from typing import Any
 
 from pydantic_settings import BaseSettings
 
+
 class BaseAppSettings(BaseSettings):
     APP_HOST: str = "http://127.0.0.1"
     BASE_DIR: Path = Path(__file__).parent.parent
